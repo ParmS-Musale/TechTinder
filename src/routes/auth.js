@@ -51,10 +51,11 @@ authRouter.post("/login", async (req, res) => {
 
     if (isPasswordValid) {
       // Create a JWT token
+      const token = await user.getJWT();
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 8 * 36000),
+      });
 
-      const token = await jwt.sign({ _id: user._id }, "Dev@tinder$21");
-      // Add the token to the cookie and send response to the user
-      res.cookie("token", token);
       res.send("Logged in successfully");
     } else {
       return res.status(400).send("Invalid Credentials");
@@ -62,6 +63,14 @@ authRouter.post("/login", async (req, res) => {
   } catch (error) {
     res.status(500).send("Something went wrong: " + error.message);
   }
+});
+
+// Logout API
+authRouter.post("/logout", async (req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+  });
+  res.send("Logged out successfully");
 });
 
 module.exports = authRouter;
