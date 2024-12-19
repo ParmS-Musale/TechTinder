@@ -88,4 +88,6 @@ module.exports = mongoose.model("User", userSchema);
 // ML Cooking
 // Bt Cookking *2
 // CSDF cooking 
+// STQA Cooking
+
 
