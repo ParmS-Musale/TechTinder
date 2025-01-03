@@ -6,7 +6,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// SugnUp API
+// SignUp API
 authRouter.post("/signup", async (req, res) => {
   try {
     validateSignUpData(req); // Validate signup data from the request body

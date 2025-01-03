@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      enum: {
-        values: ["male", "female", "other"],
-        message: `{VALUE} is not a valid gender type`,
-      },
+      // enum: {
+      //   values: ["male", "female", "other"],
+      //   message: `{VALUE} is not a valid gender type`,
+      // },
     },
     age: {
       type: Number,
