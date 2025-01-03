@@ -680,6 +680,47 @@ When working with Express.js, it’s essential to understand the difference betw
 
 ---
 
-    
-  
+
+# **Difference Between JSON and JavaScript**
+
+This document highlights the key differences between JSON (JavaScript Object Notation) and JavaScript in a clear tabular format, along with examples.
+
+---
+
+## **Comparison Table**
+
+| **Aspect**              | **JSON**                                                                 | **JavaScript**                                              |
+|--------------------------|------------------------------------------------------------------------|------------------------------------------------------------|
+| **Definition**           | JSON (JavaScript Object Notation) is a lightweight data interchange format. | JavaScript is a programming language used to create dynamic web content. |
+| **Data Format**          | JSON is a text-based data format for storing and transmitting data.    | JavaScript includes variables, functions, objects, and more for computation. |
+| **Structure**            | Follows a strict syntax for key-value pairs, e.g., `{ "key": "value" }`. | Objects and variables can follow a less strict syntax.    |
+| **Type**                 | JSON is purely a **data format** and not executable code.              | JavaScript is executable code used to implement logic.      |
+| **Support for Functions**| JSON does not support functions or methods.                           | JavaScript supports functions, objects, and methods.        |
+| **Usage**                | Used for data exchange between systems (e.g., APIs).                  | Used for writing logic and interacting with web applications. |
+| **String Quotes**        | Keys and values must be enclosed in **double quotes** (`" "`).         | Keys don’t require quotes unless they contain special characters. |
+| **Parsing**              | Requires `JSON.parse()` or `JSON.stringify()` to convert to/from JavaScript objects. | Native to JavaScript and doesn’t need parsing.              |
+
+---
+
+## **Examples**
+
+### **JSON Example**:
+```json
+{
+  "name": "Parmeshwar",
+  "age": 20,
+  "isStudent": true
+}
+```
+### **JavaScript Example**:
+```javascript
+const person = {
+  name: "Parmeshwar",
+  age: 20,
+  isStudent: true,
+  greet: function() {
+    console.log("Hello, " + this.name);
+  }
+};
+```
 
