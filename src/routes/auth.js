@@ -30,7 +30,7 @@ authRouter.post("/signup", async (req, res) => {
     await user.save();
     res.send("User registered successfully");
   } catch (error) {
-    res.status(500).send("Something went wrong: " + error.message); // Updated error handling with status code
+    res.status(500).send("ERROR: " + error.message); // Updated error handling with status code
   }
 });
 

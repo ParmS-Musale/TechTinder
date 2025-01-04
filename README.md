@@ -724,3 +724,92 @@ const person = {
 };
 ```
 
+## **What is Hashing?**
+
+- **Definition**: 
+  Hashing is a process that converts input data (of any size) into a fixed-size string of characters, which is typically a hash value. This is achieved using a hashing algorithm.
+  
+- **Purpose**:
+  - Data integrity verification.
+  - Efficient data retrieval.
+  - Password storage.
+  - Digital signatures.
+
+### **Types of Hashing**
+
+| **Hashing Type**            | **Description**                                                                                     |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|
+| **MD5 (Message Digest 5)**  | Produces a 128-bit hash value. Fast but considered insecure due to vulnerabilities to collisions.    |
+| **SHA (Secure Hash Algorithm)** | Variants like SHA-1, SHA-256, and SHA-512 are widely used for secure hashing in cryptography.          |
+| **CRC (Cyclic Redundancy Check)** | Used in error-detection algorithms for network transmissions and file storage.                      |
+| **Bcrypt**                  | Designed for password hashing. Involves salting to make it more secure.                             |
+| **Argon2**                  | A memory-intensive password hashing algorithm, winner of the Password Hashing Competition (PHC).    |
+| **PBKDF2**                  | Uses a password, a salt, and a specified number of iterations to derive a cryptographic key.        |
+
+---
+
+
+## What are Cookies, Sessions, and JSON Web Tokens?
+
+### **1. Cookies**
+- **Definition**: Small text files stored on the client-side (browser) by a website to retain user information.
+- **Purpose**: Track user activity, maintain session state, and store preferences.
+- **Characteristics**:
+  - Sent with every HTTP request.
+  - Can have an expiration date or be session-based.
+  - Often used for authentication, personalization, and tracking.
+
+### **2. Sessions**
+- **Definition**: Server-side storage mechanism to retain user data across multiple requests.
+- **Purpose**: Maintain user state and information while interacting with a web application.
+- **Characteristics**:
+  - Requires session ID (usually stored in a cookie).
+  - Data is stored on the server.
+  - More secure than storing sensitive data in cookies.
+
+### **3. JSON Web Token (JWT)**
+- **Definition**: A compact, self-contained token format for securely transmitting information.
+- **Purpose**: Used for authentication and information exchange.
+- **Characteristics**:
+  - Contains a payload with user data.
+  - Signed using a secret key (HMAC) or public/private key pair (RSA/ECDSA).
+  - Does not require server-side storage.
+
+---
+
+## Well-Known Companies and Cookie Expiration Dates
+
+| **Company**       | **Cookie Type**          | **Expiration**                    |
+|--------------------|--------------------------|------------------------------------|
+| **Google**         | Analytics               | Up to 2 years                     |
+|                    | Ads Preferences         | 13 months (GDPR compliance)       |
+|                    | Login Cookies           | 30 days                           |
+| **Facebook**       | Session Cookies         | When browser closes or inactive   |
+|                    | Login Cookies           | Up to 90 days                     |
+|                    | Tracking Cookies        | Up to 2 years                     |
+| **Amazon**         | Shopping Cart Cookies   | 7 days or until cart cleared      |
+|                    | Session Cookies         | When browser closes               |
+|                    | Recommendations         | Up to 1 year                      |
+| **Twitter**        | Session Cookies         | When browser closes               |
+|                    | Persistent Cookies      | Up to 18 months                   |
+| **Netflix**        | Authentication Cookies  | 30 days ("Remember Me" enabled)   |
+|                    | Session Cookies         | When browser closes               |
+| **Microsoft**      | Authentication Cookies  | 30 days to a few months           |
+|                    | Tracking/Personalization| Up to 2 years                     |
+
+---
+
+## Why Do Expiration Dates Vary?
+
+1. **Purpose**:
+   - Functional cookies (e.g., login or shopping cart).
+   - Tracking cookies (e.g., analytics).
+2. **User Control**:
+   - Many companies allow users to manage or delete cookies.
+3. **Compliance**:
+   - Regulations like GDPR and CCPA influence cookie expiration limits.
+
+--- 
+
+
+
