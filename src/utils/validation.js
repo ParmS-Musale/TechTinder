@@ -29,6 +29,7 @@ const vaildateEditProfileData = (req) => {
     "emailId",
     "photoUrl",
     "about",
+    "age",
     "skills",
     "gender",
   ];
@@ -38,11 +39,8 @@ const vaildateEditProfileData = (req) => {
     allowedEditFields.includes(field)
   );
 
-  if (!isEditAllowed) {
-    return { error: "Invalid fields in edit profile data" };
-  }
+  return isEditAllowed;
 
-  return { success: true };
 };
 
 module.exports = { validateSignUpData, vaildateEditProfileData };

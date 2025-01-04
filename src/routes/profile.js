@@ -5,23 +5,9 @@ const { vaildateEditProfileData } = require("../utils/validation");
 const { userAuth } = require("../middlewares/auth");
 
 // Profile-view
-profileRouter.get("/profile/view", async (req, res) => {
+profileRouter.get("/profile/view", userAuth, async (req, res) => {
   try {
-    const cookie = req.cookie;
-
-    const { token } = cookie;
-
-    if (!token) {
-      throw new Error("Invalid token");
-    }
-
-    const decodeMessage = await jwt.verify(token, "Dev@tinder$21");
-    const _id = decodeMessage;
-
-    const user = new User.findById(_id);
-    if (!user) {
-      throw new Error("Invalid user");
-    }
+    const user = req.user; // `req.user` is set by `userAuth` middleware
     res.send(user);
   } catch (error) {
     res.status(400).send("Error: " + error.message);
@@ -46,7 +32,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
     });
 
     await loggedInUser.save();
-    res.send("Profile Edit Successful");
+    res.send(`${loggedInUser.firstName} Your Profile Edit Successfully`);
   } catch (error) {
     res.status(400).send("Error: " + error.message);
   }
