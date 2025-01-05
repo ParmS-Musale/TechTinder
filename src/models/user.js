@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      // enum: {
-      //   values: ["male", "female", "other"],
-      //   message: `{VALUE} is not a valid gender type`,
-      // },
     },
     age: {
       type: Number,
@@ -31,10 +27,9 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      validate(value) {
-        if (!["male", "female", "others"].includes(value)) {
-          throw new Error("Gender should be male, female or others");
-        }
+      enum: {
+        values: ["male", "female", "others"],
+        message: "{VALUE} is not supported",
       },
     },
     password: {
