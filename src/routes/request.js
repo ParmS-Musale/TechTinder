@@ -4,6 +4,7 @@ const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
 
 const requestRouter = express.Router();
+
 requestRouter.post(
   "/request/send/:status/:toUserId",
   userAuth,
@@ -39,7 +40,7 @@ requestRouter.post(
         status,
       });
       console.log(connectionRequest);
-      
+
       const data = await connectionRequest.save();
       res.json({
         message:
@@ -47,6 +48,49 @@ requestRouter.post(
         data,
       });
     } catch (err) {
+      res.status(400).send("ERROR: " + err.message);
+    }
+  }
+);
+
+requestRouter.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user;        
+      const { status, requestId } = req.params;   
+
+      const allowedStatus = ["accepted", "rejected"];
+      if (!allowedStatus.includes(status)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid status type: " + status });
+      }
+
+      const connectionRequest = await ConnectionRequest.findOne({
+        _id: requestId,
+        toUserId: loggedInUser._id,
+        status: "interested",
+      });
+      
+      console.log(connectionRequest);
+
+      if (!connectionRequest) {
+        return res
+          .status(404)
+          .json({ message: "Connection request not found!" });
+      }
+
+      connectionRequest.status = status;
+
+      const data = await connectionRequest.save();
+      
+      res.json({
+        message: "Connection request has been " + status,
+        data,
+      });
+    } catch (error) {
       res.status(400).send("ERROR: " + err.message);
     }
   }
