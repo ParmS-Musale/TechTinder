@@ -38,6 +38,8 @@ requestRouter.post(
         toUserId,
         status,
       });
+      console.log(connectionRequest);
+      
       const data = await connectionRequest.save();
       res.json({
         message:
