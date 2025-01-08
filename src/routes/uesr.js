@@ -7,7 +7,7 @@ const user = require("../models/user");
 
 const SAFE_FIELDS = "firstName lastName photoUrl age  skills";
 
-userRouter.get("/user/request/received", userAuth, async (req, res) => {
+userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -21,7 +21,7 @@ userRouter.get("/user/request/received", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/user/connection", userAuth, async (req, res) => {
+userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
     const connectionRequest = await ConnectionRequest.find({

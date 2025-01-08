@@ -27,8 +27,12 @@ authRouter.post("/signup", async (req, res) => {
     });
 
     // Save user to the database
-    await user.save();
-    res.send("User registered successfully");
+    const savedUser = await user.save();
+    const token = await savedUser.getJWT();
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 8 * 3600000),
+    });
+    res.json({ message: "User Added successfully!", data: savedUser });
   } catch (error) {
     res.status(500).send("ERROR: " + error.message); // Updated error handling with status code
   }
@@ -67,7 +71,7 @@ authRouter.post("/login", async (req, res) => {
 
 // Logout API
 authRouter.post("/logout", async (req, res) => {
-  res.cookie("token", null, {
+  res.cookie("token", "", {
     expires: new Date(Date.now()),
   });
   res.send("Logged out successfully");
