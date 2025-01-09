@@ -74,8 +74,6 @@ requestRouter.post(
         status: "interested",
       });
       
-      console.log(connectionRequest);
-
       if (!connectionRequest) {
         return res
           .status(404)
@@ -90,7 +88,7 @@ requestRouter.post(
         message: "Connection request has been " + status,
         data,
       });
-    } catch (error) {
+    } catch (err) {
       res.status(400).send("ERROR: " + err.message);
     }
   }
