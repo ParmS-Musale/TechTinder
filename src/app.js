@@ -7,7 +7,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "https://techtinder21.vercel.app", // Frontend origin
+    origin: "https://techtinder21.vercel.app/", // Frontend origin
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allowed headers
     credentials: true, // Allow cookies
@@ -38,4 +38,3 @@ connectDB()
   .catch((err) => {
     console.log("Database cannot be connected", err);
   }); 
-//  Everything ok
