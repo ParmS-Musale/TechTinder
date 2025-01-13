@@ -7,7 +7,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend origin
+    origin: "https://techtinder21.vercel.app", // Frontend origin
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"], // Allowed methods
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allowed headers
     credentials: true, // Allow cookies
