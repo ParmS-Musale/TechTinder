@@ -1,4 +1,4 @@
-const express = require("express");
+dconst express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const cookieParser = require("cookie-parser");
@@ -38,3 +38,4 @@ connectDB()
   .catch((err) => {
     console.log("Database cannot be connected", err);
   }); 
+//  Everything ok
