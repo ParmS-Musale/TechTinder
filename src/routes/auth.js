@@ -31,6 +31,9 @@ authRouter.post("/signup", async (req, res) => {
     const token = await savedUser.getJWT();
     res.cookie("token", token, {
       expires: new Date(Date.now() + 8 * 3600000),
+      sameSite: "None",
+        httpOnly: true,
+        secure: true,
     });
     res.json({ message: "User Added successfully!", data: savedUser });
   } catch (error) {
@@ -58,6 +61,9 @@ authRouter.post("/login", async (req, res) => {
       const token = await user.getJWT();
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 360000),
+        sameSite: "None",
+        httpOnly: true,
+        secure: true,
       });
 
       res.send({ message: "Logged in successfully", user });
@@ -73,6 +79,9 @@ authRouter.post("/login", async (req, res) => {
 authRouter.post("/logout", async (req, res) => {
   res.cookie("token", "", {
     expires: new Date(Date.now()),
+    sameSite: "None",
+    httpOnly: true,
+    secure: true,
   });
   res.send("Logged out successfully");
 });
