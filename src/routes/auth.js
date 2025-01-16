@@ -1,6 +1,5 @@
 const express = require("express");
 const authRouter = express.Router();
-
 const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
@@ -29,11 +28,13 @@ authRouter.post("/signup", async (req, res) => {
     // Save user to the database
     const savedUser = await user.save();
     const token = await savedUser.getJWT();
+    const tokenOption = {
+      httpOnly: true,
+      secure: true, // Set true if using HTTPS
+      sameSite: "None",
+    };
     res.cookie("token", token, {
       expires: new Date(Date.now() + 8 * 3600000),
-      sameSite: "None",
-        httpOnly: true,
-        secure: true,
     });
     res.json({ message: "User Added successfully!", data: savedUser });
   } catch (error) {
@@ -59,11 +60,13 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       // Create a JWT token
       const token = await user.getJWT();
+      const tokenOption = {
+        httpOnly: true,
+        secure: true, // Set true if using HTTPS
+        sameSite: "None",
+      };
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 360000),
-        sameSite: "None",
-        httpOnly: true,
-        secure: true,
       });
 
       res.send({ message: "Logged in successfully", user });
@@ -76,14 +79,20 @@ authRouter.post("/login", async (req, res) => {
 });
 
 // Logout API
-authRouter.post("/logout", async (req, res) => {
-  res.cookie("token", "", {
-    expires: new Date(Date.now()),
-    sameSite: "None",
-    httpOnly: true,
-    secure: true,
-  });
-  res.send("Logged out successfully");
+authRouter.post("/logout", (req, res) => {
+  try {
+    const tokenOption = {
+      httpOnly: true,
+      secure: true, // Set true if using HTTPS
+      sameSite: "None",
+    };
+    const token = "";
+    // storing token inside the cookies
+    res
+      .cookie("token", token, tokenOption)
+      .json({ message: "logout successfull" });
+  } catch (error) {
+    res.status(404).send(error.message);
+  }
 });
-
 module.exports = authRouter;
