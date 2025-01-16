@@ -3,7 +3,7 @@ const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require("../models/user");
 const nodemailer = require("nodemailer");
-
+require("dotenv").config();
 
 const requestRouter = express.Router();
 
@@ -16,7 +16,7 @@ requestRouter.post(
       const toUserId = req.params.toUserId;
       const status = req.params.status;
       const allowedStatus = ["ignored", "interested"];
-      
+
       // Validate status
       if (!allowedStatus.includes(status)) {
         return res
@@ -25,6 +25,8 @@ requestRouter.post(
       }
       // Check if the recipient exists
       const toUser = await User.findById(toUserId);
+      console.log(toUser);
+      
       if (!toUser) {
         return res.status(404).json({ message: "User not found!" });
       }
@@ -48,27 +50,33 @@ requestRouter.post(
       });
       console.log(connectionRequest);
 
-      //  // Email Notification Functionality
-      //  const transporter = nodemailer.createTransport({
-      //   service: "smtp.gmail.com", // or your email provider
-      //   auth: {
-      //     user: process.env.EMAIL_USER, // Your email address
-      //     pass: process.env.EMAIL_PASS, // Your app password
-      //   },
-      // });
+      // Email Notification Functionality
+      const transporter = nodemailer.createTransport({
+        secure: true,
+        host: "smtp.gmail.com",
+        port: 465, 
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
-      // const mailOptions = {
-      //   from: process.env.EMAIL_USER,
-      //   to: toUser.email, // Sending to the recipient's email
-      //   subject: "New Connection Request",
-      //   text: `${req.user.firstName} has sent you a connection request. Status: ${status}`,
-      //   html: `<p><strong>${req.user.firstName}</strong> has sent you a connection request.</p><p>Status: <strong>${status}</strong></p>`,
-      // };
+      const sendMail = {
+        from: process.env.EMAIL_USER,
+        to: toUser.emailId, // Sending to the recipient's email
+        subject: "New Connection Request",
+        text: `${req.user.firstName} has sent you a connection request.`,
+        html: `<p><strong>${req.user.firstName}</strong> has sent you a connection request.</p></p>`,
+      };
 
       // Send the email
-      await transporter.sendMail(mailOptions);
-      console.log("Email sent successfully!");
-      
+      try {
+        await transporter.sendMail(sendMail);
+        console.log("Email sent successfully!");
+      } catch (error) {
+        console.error("Error sending email:", error);
+      }
+
       const data = await connectionRequest.save();
       res.json({
         message:
@@ -80,14 +88,13 @@ requestRouter.post(
     }
   }
 );
-
 requestRouter.post(
   "/request/review/:status/:requestId",
   userAuth,
   async (req, res) => {
     try {
-      const loggedInUser = req.user;        
-      const { status, requestId } = req.params;   
+      const loggedInUser = req.user;
+      const { status, requestId } = req.params;
 
       const allowedStatus = ["accepted", "rejected"];
       if (!allowedStatus.includes(status)) {
@@ -101,7 +108,7 @@ requestRouter.post(
         toUserId: loggedInUser._id,
         status: "interested",
       });
-      
+
       if (!connectionRequest) {
         return res
           .status(404)
@@ -111,7 +118,7 @@ requestRouter.post(
       connectionRequest.status = status;
 
       const data = await connectionRequest.save();
-      
+
       res.json({
         message: "Connection request has been " + status,
         data,
@@ -122,5 +129,3 @@ requestRouter.post(
   }
 );
 module.exports = requestRouter;
-
-
