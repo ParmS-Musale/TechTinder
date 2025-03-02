@@ -10,7 +10,7 @@ Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It is de
 - **Event-driven**: Uses event loop for concurrency.
 - **Single-threaded**: Unlike traditional multithreaded systems.
 
-### **What is a Database?**
+### **What is a Databases?**
 
 A database is an organized collection of data stored electronically for efficient access, management, and updating.
 
